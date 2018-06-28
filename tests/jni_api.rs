@@ -61,3 +61,13 @@ pub fn is_instance_of_null() {
     assert!(unwrap(&env, env.is_instance_of(obj, EXCEPTION_CLASS)));
     assert!(unwrap(&env, env.is_instance_of(obj, ARITHMETIC_EXCEPTION_CLASS)));
 }
+
+#[test]
+pub fn get_vm() {
+    let env1 = attach_current_thread();
+    let vm1 = unwrap(&env1, env1.get_java_vm());
+    let raw_vm = vm1.get_java_vm_pointer();
+    let vm2 = unwrap(&env1, JavaVM::from_raw(raw_vm));
+    let env2 = unwrap(&env1, vm2.get_env());
+    assert!(env1,get_native_interface(), env2.get_native_interface());
+}
